@@ -1,0 +1,148 @@
+*********Creación de proyecto webreactreduxwebpackcontactos ********
+
+Abra un cmd y posicionese en la carpeta donde tendra el codigo del aplicativo, y ejecute el siguiente comando:
+	
+	create-react-app webreactreduxwebpackcontactos
+
+Crear el package.json con lo basico, vaya a la carpeta del proyecto webreactreduxwebpackcontactos y ejecutar el siguiente comando:
+
+	npm init -y
+
+Comandos para la configuración de la aplicación
+
+	yarn add react react-dom react-router react-router-dom bootstrap reactstrap react-bootstrap redux react-redux redux-devtools-extension redux-thunk react-fetch react-confirm-alert react-md-spinner @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome @fortawesome/free-brands-svg-icons axios
+	
+	npm install path @babel/core @babel/preset-react babel-loader --save
+
+Instalar el web pack globalmente con el siguiente comando:
+
+	npm install webpack webpack-cli --global
+
+Instalar componentes de webpack localmente con el siguiente comando:
+
+	npm install -D webpack webpack-cli
+
+	Nota: Tambien puede ejecutar el webpack cli de manera global con el comando npm i -g webpack-cli
+
+Instalar el componente que nos pasara el index html por default a la carpeta dist ejecute el siguiente comando:
+
+	npm install html-webpack-plugin
+
+Facilitar la compilación y generación del proyecto, hay que instalar un servidor de desarrollo ejecutando el siguiente comando:
+
+	npm install webpack-dev-server
+
+
+Crear el archivo de configuración que webpack utilizara para crear todos los componentes ejecutando el siguiente comando en la raiz del proyecto:
+
+	fsutil file createnew webpack.config.js 0
+
+Configurar el archivo webpack.config.js:
+
+	Este archivo necesita tener originalmente las siguientes cosas:
+
+	mode: Webpack optimizara nuestro bundle segun el modo que utilicemos.
+	entry: Dirección a nuestro archivo de entrada
+	output: Webpack generara un archivo de salida, donde tendremos todo lo que llegue a procesar webpack.
+
+	Ejecute el siguiente comando para usar el archivo webpack.config.js como configuración:
+
+	webpack webpack.config.js
+
+	Agregue dentro del archivo webpack.config.js lo siguiente:
+	
+var htmlWebpackPlugin = require('html-webpack-plugin');
+var path = require('path');
+module.exports = {
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        compress: true,
+        port: 3000
+      },
+    entry:{
+        main: './src/index.js'
+    } ,
+    output: {
+      path: path.join(__dirname, 'dist'),
+      filename: '[name].js'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx', '.css', '.scv']
+      },
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-react']
+            }
+          }
+        },
+        {
+            test: /\.css$/i,
+            use: ['style-loader', 'css-loader'],
+        },
+        {
+            test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            },
+        },
+      ]
+    },
+    plugins:[
+        new htmlWebpackPlugin(
+            {
+                template: './src/index.html'
+            }
+        )
+    ]
+  }
+
+Crear la carpeta src y dentro realizar las siguientes acciones:
+
+	- Crear archivo index.html
+	- Crear archivo index.js
+
+
+	Agregue lo siguiente al archivo index.html:
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Aplicación de Contactos</title>
+  </head>
+  <body>
+    <div id="root">
+      
+    </div>
+    <script src="dist/main.js" charset="utf-8"></script>
+  </body>
+</html>
+	
+Abra el archivo package.json y agregue dentro de la sección scripts lo siguiente:
+
+	"start": "webpack-dev-server --mode development"
+
+Integrar los cambios que se vayan haciendo al archivo main.js
+
+	npx webpack -d
+
+Compilar e integrar los cambios que se hayan hecho ejecute el siguiente comando:
+
+	npx webpack-dev-server -d
+	Nota: Se recomienda que una vez instalado el servidor de desarrollo se ejecute este comando en lugar de npx webpack -d ya que permitira que se trabaje
+	más rapido
+
+Añadir carpeta node_modules a repositorio de github, siga las siguientes instrucciones****
+
+	- Abra el archivo .gitignore y quite la línea de código /node_modules
+
+	Nota: Se recomienta que no la quite ya que ocupara muchos megas en el repositorio y además se pueden descargar todas las librerías ejecutando el 
+	comando npm install sobre la carpeta de la aplicación, ya que todas las dependencias estan declaradas en el archivo package.json
+
