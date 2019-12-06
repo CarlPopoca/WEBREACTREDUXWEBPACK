@@ -2,9 +2,10 @@ var htmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 module.exports = {
     devServer: {
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.join(__dirname, '/src'),
         compress: true,
-        port: 3000
+        port: 3000,
+        historyApiFallback: true
       },
     entry:{
         main: './src/index.js'
