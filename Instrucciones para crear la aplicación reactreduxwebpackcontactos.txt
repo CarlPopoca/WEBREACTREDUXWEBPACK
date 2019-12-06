@@ -108,7 +108,6 @@ Crear la carpeta src y dentro realizar las siguientes acciones:
 	- Crear archivo index.html
 	- Crear archivo index.js
 
-
 	Agregue lo siguiente al archivo index.html:
 
 <!DOCTYPE html>

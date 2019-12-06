@@ -1,6 +1,6 @@
---Genere el build que se utilizara a desplegar en producción
+--Genere la carpeta dist que se utilizara a desplegar en producción
 
-	yarn build
+	npx webpack -d
 
 ********************************************************************
 --Para crear establecer el directorio como servidor estatico
@@ -14,27 +14,30 @@
 	Nota: Estos dos pasos son opcionales
 *******************************************************************
 
---Copiar la carpeta build que se genero y copiarla en una ruta diferente, va a ser la que se establecera en el IIS
+--Copiar la carpeta dist que se genero y copiarla en una ruta diferente, va a ser la que se establecera en el IIS
 
 --Crear un archvo web.config y agregue lo siguiente:
 
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-<system.webServer>
-  <rewrite>
-    <rules>
-      <rule name="Rewrite Text Requests" stopProcessing="true">
-        <match url=".*" />
-        <conditions>
-          <add input="{HTTP_METHOD}" pattern="^GET$" />
-          <add input="{HTTP_ACCEPT}" pattern="^text/html" />
-          <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
-        </conditions>
-        <action type="Rewrite" url="/index.html" />
-      </rule>
-    </rules>
-  </rewrite>
-</system.webServer>
+  <system.webServer>
+    <rewrite>
+      <rules>
+        <rule name="Static Assets" stopProcessing="true">
+          <match url="([\S]+[.](html|htm|svg|js|css|png|gif|jpg|jpeg))" />
+          <action type="Rewrite" url="/{R:1}"/>
+        </rule>
+        <rule name="ReactRouter Routes" stopProcessing="true">
+          <match url=".*" />
+          <conditions logicalGrouping="MatchAll">
+            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+          </conditions>
+          <action type="Rewrite" url="/" />
+        </rule>
+      </rules>
+    </rewrite>
+  </system.webServer>
 </configuration>
 
 --Descargue el programa urlrewrite dela siguiente ruta e instalelo:
@@ -49,7 +52,7 @@
 --Abra el Administrador de Internet Information Service (IIS) y realice las siguientes acciones:
 	
 	* De clic derecho sobre Sitios y de clic en Agregar sitio web
-	* Especifique un Nombre del sitio y seleccione la ruta del build
+	* Especifique un Nombre del sitio y seleccione la ruta de la carpeta dist
 	* De clic en conectar como e introduzca las credenciales del usuario Administrador
 	* Por último de clic en el botón Aceptar.
 	* Pruebe el sitio web dando clic derecho sobre el sitio web, después en Administrar sitio web y por último en examinar.
