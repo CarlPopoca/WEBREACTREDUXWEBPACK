@@ -1,55 +1,55 @@
---Genere la carpeta dist que se utilizara a desplegar en producción
+Generar la carpeta dist que se utilizara a desplegar en producción:
 
 	npx webpack -d
 
 ********************************************************************
---Para crear establecer el directorio como servidor estatico
+Establecer el directorio como servidor estatico:
 
 	npm install -g serve
 
---Para cambiarle el puerto al server 
+Cambiar el puerto al server:
 
 	serve -s build -l 4000
 
 	Nota: Estos dos pasos son opcionales
 *******************************************************************
 
---Copiar la carpeta dist que se genero y copiarla en una ruta diferente, va a ser la que se establecera en el IIS
+Copiar la carpeta dist que se genero y copiarla en una ruta diferente, va a ser la que se establecera en el IIS.
 
---Crear un archvo web.config y agregue lo siguiente:
+Crear un archvo web.config y agregue lo siguiente:
 
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-  <system.webServer>
-    <rewrite>
-      <rules>
-        <rule name="Static Assets" stopProcessing="true">
-          <match url="([\S]+[.](html|htm|svg|js|css|png|gif|jpg|jpeg))" />
-          <action type="Rewrite" url="/{R:1}"/>
-        </rule>
-        <rule name="ReactRouter Routes" stopProcessing="true">
-          <match url=".*" />
-          <conditions logicalGrouping="MatchAll">
-            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
-            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
-          </conditions>
-          <action type="Rewrite" url="/" />
-        </rule>
-      </rules>
-    </rewrite>
-  </system.webServer>
-</configuration>
+      <?xml version="1.0" encoding="UTF-8"?>
+      <configuration>
+  	   <system.webServer>
+    	      <rewrite>
+      	         <rules>
+                    <rule name="Static Assets" stopProcessing="true">
+                       <match url="([\S]+[.](html|htm|svg|js|css|png|gif|jpg|jpeg))" />
+                       <action type="Rewrite" url="/{R:1}"/>
+                    </rule>
+                    <rule name="ReactRouter Routes" stopProcessing="true">
+                       <match url=".*" />
+                       <conditions logicalGrouping="MatchAll">
+                          <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            	          <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+                       </conditions>
+                       <action type="Rewrite" url="/" />
+                    </rule>
+               </rules>
+            </rewrite>
+         </system.webServer>
+      </configuration>
 
---Descargue el programa urlrewrite dela siguiente ruta e instalelo:
+Descargue el programa urlrewrite dela siguiente ruta e instalelo:
 
 	https://www.iis.net/downloads/microsoft/url-rewrite
 
---Instale IIS en su equipo yendo a activar caracteristicas de windows y dando clic en el check Internet Information server.
+Instale IIS en su equipo yendo a activar caracteristicas de windows y dando clic en el check Internet Information server.
 
---Vaya a la ruta C:\inetpub\wwwroot y de clic derecho sobre esta carpeta, después de clic en la pestaña seguridad y 
+Vaya a la ruta C:\inetpub\wwwroot y de clic derecho sobre esta carpeta, después de clic en la pestaña seguridad y 
 	otorguele control total a Usuarios, IIS_IUSRS y a Administradores.
 
---Abra el Administrador de Internet Information Service (IIS) y realice las siguientes acciones:
+Abra el Administrador de Internet Information Service (IIS) y realice las siguientes acciones:
 	
 	* De clic derecho sobre Sitios y de clic en Agregar sitio web
 	* Especifique un Nombre del sitio y seleccione la ruta de la carpeta dist
@@ -57,8 +57,8 @@
 	* Por último de clic en el botón Aceptar.
 	* Pruebe el sitio web dando clic derecho sobre el sitio web, después en Administrar sitio web y por último en examinar.
 
-Nota: Si desea cambiar el puerto del sitio web considere que podría hacer un cambio en los servicios en la clase startup.cs 
-y dentro del método configure en la línea de código app.UseCors para que el servicio pueda permitirle al sitio web utilizar 
-sus métodos.
+      Nota: Si desea cambiar el puerto del sitio web considere que podría hacer un cambio en los servicios en la clase startup.cs 
+      y dentro del método configure en la línea de código app.UseCors para que el servicio pueda permitirle al sitio web utilizar 
+      sus métodos.
 
 
