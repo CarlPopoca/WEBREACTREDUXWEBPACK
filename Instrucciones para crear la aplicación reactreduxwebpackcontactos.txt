@@ -9,7 +9,7 @@ Crear el package.json con lo basico, vaya a la carpeta del proyecto webreactredu
 
 Comandos para la configuración de la aplicación
 
-	yarn add react react-dom react-router react-router-dom bootstrap reactstrap react-bootstrap redux react-redux redux-devtools-extension redux-thunk react-fetch react-confirm-alert react-md-spinner @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome @fortawesome/free-brands-svg-icons axios
+	yarn add react react-dom react-router react-router-dom bootstrap reactstrap react-bootstrap redux react-redux redux-devtools-extension redux-thunk react-fetch react-confirm-alert react-md-spinner @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome @fortawesome/free-brands-svg-icons
 	
 	npm install path @babel/core @babel/preset-react babel-loader --save
 
@@ -30,7 +30,6 @@ Instalar el componente que nos pasara el index html por default a la carpeta dis
 Facilitar la compilación y generación del proyecto, hay que instalar un servidor de desarrollo ejecutando el siguiente comando:
 
 	npm install webpack-dev-server
-
 
 Crear el archivo de configuración que webpack utilizara para crear todos los componentes ejecutando el siguiente comando en la raiz del proyecto:
 

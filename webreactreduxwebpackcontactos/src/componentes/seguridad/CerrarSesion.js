@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Link, Redirect} from 'react-router-dom';
-import axios from 'axios';
 import AlertaError from '../../componentes/AlertaError';
 import {cerrarSesion} from '../../actions/actionsSesion';
 import {connect} from 'react-redux';
